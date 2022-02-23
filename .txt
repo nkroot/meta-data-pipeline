@@ -1,0 +1,30 @@
+malt --name,amount->value,unit
+hops -- name,amount->value,unit--add,attribute
+yeast
+
+
+select count(1) cnt,'stg_beverage_detail_info' tname from staging.stg_beverage_detail_info
+union all
+select count(1),'beverage_details' from  dev.beverage_details
+union all
+select count(1),'ingredients_info' from  dev.ingredients_info
+union all
+select count(1),'ref_food_item' from  dev.ref_food_item
+union all
+select count(1),'food_pairing_info' from  dev.food_pairing_info;
+
+pip install -r requirements.txt  - to install all the packages from the requirements to the environment
+
+git setup
+---------
+
+git init
+git add --all
+
+git config --global user.email "naveenkollati431@gmail.com"
+git config --global user.name naveen
+
+git commit -m "message"
+
+git push origin main -- push it to git 
+
