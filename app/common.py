@@ -8,19 +8,18 @@ import traceback
 import logging
 
 
-
-
 def log(msg, level='debug'):
     '''
         adds log message to logger with formatting
     '''
     logging.basicConfig(filename="metadata_log_file.log",
-                    format='%(asctime)s %(message)s',
-                    filemode='a')
+                    format='%(asctime)s %(message)s',level=logging.DEBUG
+                    ,filemode='a'
+                    )
 
     logger = logging.getLogger()
     
-    logger.setLevel(logging.DEBUG)
+    #logger.setLevel(logging.DEBUG)
 
     if level=='info':
         l = logger.info 

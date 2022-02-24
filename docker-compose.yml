@@ -6,7 +6,7 @@ services:
         - postgres
 
       volumes:
-        - ./:/usr/src/app:ro
+        - ./:/usr/src/app
       # env_file: 
       #   - ./.env
       environment:
@@ -33,7 +33,8 @@ services:
         && python main.py 49.5978157 11.0038064
         && python main.py 53.550341 10.000654
         && python main.py 51.2254018 6.7763137
-        && python main.py 50.938361 6.959974"
+        && python main.py 50.938361 6.959974
+        && python main.py 51.0493286 13.7381437"
   postgres:
     image: postgres:14-alpine
     
