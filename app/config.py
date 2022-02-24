@@ -1,6 +1,8 @@
 
 from pydantic import BaseSettings
 
+# Creating pydantic to capture the envionment variables
+
 class Settings(BaseSettings):
 
     database_hostname:str

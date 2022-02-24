@@ -7,6 +7,7 @@ import sys
 import traceback
 import logging
 
+#Created log method to capture the logs
 
 def log(msg, level='debug'):
     '''
@@ -19,8 +20,6 @@ def log(msg, level='debug'):
 
     logger = logging.getLogger()
     
-    #logger.setLevel(logging.DEBUG)
-
     if level=='info':
         l = logger.info 
     elif level=='error':
@@ -30,11 +29,12 @@ def log(msg, level='debug'):
 
     l(msg)
     
-
+#Validating the csv fields
 def clean_csv_value(value: Optional[Any]) -> str:
     if value is None:
         return r'\N'
     return str(value).replace('\n', '\\n')
+    
 #Creating a string like an object named CSV file using textio base.
 
 class StringIteratorIO(io.TextIOBase):

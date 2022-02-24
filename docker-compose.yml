@@ -21,20 +21,25 @@ services:
         - RETRY=${RETRY}
         - APIKEY=${APIKEY}
       
-      command: >
-        sh -c "python main.py 52.5170365 13.3888599
-        && python main.py 48.1371079 11.5753822
-        && python main.py 49.453872 11.077298
-        && python main.py 51.9625101 7.6251879
-        && python main.py 52.4009309 13.0591397
-        && python main.py 52.3744779 9.7385532
-        && python main.py 48.7784485 9.1800132
-        && python main.py 50.1106444 8.6820917
-        && python main.py 49.5978157 11.0038064
-        && python main.py 53.550341 10.000654
-        && python main.py 51.2254018 6.7763137
-        && python main.py 50.938361 6.959974
-        && python main.py 51.0493286 13.7381437"
+      #Single location weather data capturing
+      command: python main.py 52.5170365 13.3888599
+      
+      #Multiple location weather data capturing
+      # command: >
+      #   sh -c "python main.py 52.5170365 13.3888599
+      #   && python main.py 48.1371079 11.5753822
+      #   && python main.py 49.453872 11.077298
+      #   && python main.py 51.9625101 7.6251879
+      #   && python main.py 52.4009309 13.0591397
+      #   && python main.py 52.3744779 9.7385532
+      #   && python main.py 48.7784485 9.1800132
+      #   && python main.py 50.1106444 8.6820917
+      #   && python main.py 49.5978157 11.0038064
+      #   && python main.py 53.550341 10.000654
+      #   && python main.py 51.2254018 6.7763137
+      #   && python main.py 50.9777974 11.0287364
+      #   && python main.py 51.0493286 13.7381437"
+
   postgres:
     image: postgres:14-alpine
     
@@ -51,6 +56,7 @@ services:
       # copy the sql script to create tables
       - ./sql/CreateTableScripts.sql:/docker-entrypoint-initdb.d/CreateTableScripts.sql
   
+  #Use the following ip to connect in browser http://localhost:8080/
   adminer:
     image: adminer
     restart: always
