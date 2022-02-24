@@ -1,0 +1,60 @@
+version: "3"
+services:
+  datapipeline:
+      build: .
+      depends_on:
+        - postgres
+
+      volumes:
+        - ./:/usr/src/app:ro
+      # env_file: 
+      #   - ./.env
+      environment:
+        - DATABASE_HOSTNAME=postgres
+        - DATABASE_PORT=5432
+        - DATABASE_PASSWORD=nkroot
+        - DATABASE_NAME=metadata
+        - DATABASE_USERNAME=postgres
+        - STAGING_SCHEMA=staging
+        - DEVELOPMENT_SCHEMA=dev
+        - SLEEP_TIME=5
+        - RETRY=5
+        - APIKEY=44326a4af92f39ef382ae81ad95c1123
+      
+      command: >
+        sh -c "python main.py 52.5170365 13.3888599
+        && python main.py 48.1371079 11.5753822
+        && python main.py 49.453872 11.077298
+        && python main.py 51.9625101 7.6251879
+        && python main.py 52.4009309 13.0591397
+        && python main.py 52.3744779 9.7385532
+        && python main.py 48.7784485 9.1800132
+        && python main.py 50.1106444 8.6820917
+        && python main.py 49.5978157 11.0038064
+        && python main.py 53.550341 10.000654
+        && python main.py 51.2254018 6.7763137
+        && python main.py 50.938361 6.959974"
+  postgres:
+    image: postgres:14-alpine
+    
+    ports:
+      - 5342:5342
+
+    environment:
+      - POSTGRES_PASSWORD=nkroot
+      - POSTGRES_DB=metadata
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    
+    volumes:
+      - postgres-db:/var/lib/postgresql/data/pgdata
+      # copy the sql script to create tables
+      - ./sql/CreateTableScripts.sql:/docker-entrypoint-initdb.d/CreateTableScripts.sql
+  
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  postgres-db:

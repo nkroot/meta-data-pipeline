@@ -1,4 +1,4 @@
-from app.common import timeit
+from app.common import print_msg, timeit
 
 
 @timeit
@@ -64,6 +64,10 @@ def agg_weather_details(conn):
         
         cursor.execute(sql)
         conn.commit()
+        
+        cursor.execute("""select count(1) as cnt from staging.stg_weather_detail_info""")
+        dag = cursor.fetchone()
+        print_msg(dag[0])
 
 def execute(conn):
     agg_max_temp_location(conn)

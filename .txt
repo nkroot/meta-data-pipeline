@@ -1,18 +1,3 @@
-malt --name,amount->value,unit
-hops -- name,amount->value,unit--add,attribute
-yeast
-
-
-select count(1) cnt,'stg_beverage_detail_info' tname from staging.stg_beverage_detail_info
-union all
-select count(1),'beverage_details' from  dev.beverage_details
-union all
-select count(1),'ingredients_info' from  dev.ingredients_info
-union all
-select count(1),'ref_food_item' from  dev.ref_food_item
-union all
-select count(1),'food_pairing_info' from  dev.food_pairing_info;
-
 pip install -r requirements.txt  - to install all the packages from the requirements to the environment
 
 git setup
@@ -26,5 +11,20 @@ git config --global user.name naveen
 
 git commit -m "message"
 
-git push origin main -- push it to git 
+git branch -M main
+git remote add origin https://github.com/nkroot/meta-data-pipeline.git
+git push -u origin main -- push it to git 
 
+docker
+--------
+
+docker build -t metadata -- to build an image
+docker-compose up -d 
+docker-compose down -- to down everything
+
+docker-compose build --no-cache -- used to rebuild the existing build without using cache build.
+docker ps -- to see the containers
+docker ps -a to see all the containers
+docker image ls -- list all images
+
+docker exec -it 97b69290ae2d /bin/bash -- to see the contents of container eg postgres querying environmnt

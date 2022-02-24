@@ -4,8 +4,6 @@ geographiclib==1.52
 geopy==2.2.0
 idna==3.3
 memory-profiler==0.60.0
-numpy==1.22.1
-pandas==1.4.0
 passlib==1.7.4
 psutil==5.9.0
 psycopg2==2.9.3
