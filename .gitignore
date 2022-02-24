@@ -2,3 +2,5 @@ __pycache__
 venv/
 .env
 .txt
+metadata_log_file.log
+example.py

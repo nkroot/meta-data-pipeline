@@ -1,5 +1,6 @@
 certifi==2021.10.8
 charset-normalizer==2.0.10
+docker==5.0.3
 geographiclib==1.52
 geopy==2.2.0
 idna==3.3

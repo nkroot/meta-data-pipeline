@@ -3,7 +3,7 @@ from urllib.parse import urlencode
 import requests
 import calendar
 from datetime import datetime,timedelta
-from app.common import clean_csv_value,StringIteratorIO, print_msg,timeit,date_unixtimestamp_gmt,exception_message
+from app.common import clean_csv_value,StringIteratorIO,timeit,date_unixtimestamp_gmt,exception_message,log
 from app.sqlmodule import get_existing_hashed_data
 from  psycopg2 import DatabaseError
 from app.config import settings
@@ -35,9 +35,11 @@ def write_json_data_to_weather_stg_table(conn :str, weather_info: Iterator[Dict[
         
         table_name = 'stg_weather_detail_info'
         col_name = "latitude,longitude,unixtimestamp"    
-        
+        log(table_name,level='info')
         with conn.cursor() as cursor:
             
+            sql = "SET search_path TO %s "%(settings.staging_schema)
+            log(sql)
             cursor.execute("SET search_path TO %s ",(settings.staging_schema,))
 
             existing_data = get_existing_hashed_data(cursor,table_name,col_name)
@@ -94,6 +96,6 @@ def write_json_data_to_weather_stg_table(conn :str, weather_info: Iterator[Dict[
 def execute(conn,latitude,longitude):
     weather_info=list(iterate_api_for_temperature_info(latitude,longitude))
     location = get_location(latitude,longitude)
-    print_msg("Data Insertion Started")
+    log("Data Insertion Started",level='info')
     write_json_data_to_weather_stg_table(conn,weather_info,location)
-    print_msg("Data Insertion Ended")
+    log("Data Insertion Ended",level='info')

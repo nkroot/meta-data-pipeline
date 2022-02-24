@@ -5,6 +5,32 @@ from functools import wraps
 from datetime import datetime
 import sys
 import traceback
+import logging
+
+
+
+
+def log(msg, level='debug'):
+    '''
+        adds log message to logger with formatting
+    '''
+    logging.basicConfig(filename="metadata_log_file.log",
+                    format='%(asctime)s %(message)s',
+                    filemode='a')
+
+    logger = logging.getLogger()
+    
+    logger.setLevel(logging.DEBUG)
+
+    if level=='info':
+        l = logger.info 
+    elif level=='error':
+        l = logger.error
+    else :
+        l = logger.debug
+
+    l(msg)
+    
 
 def clean_csv_value(value: Optional[Any]) -> str:
     if value is None:
@@ -53,7 +79,7 @@ def timeit(fn):
 
     def time_delta(*args, **kwargs):
         
-        print_msg("""{}()""".format(fn.__name__))
+        log("""{}()""".format(fn.__name__),level='info')
 
         # Estimating the Time Delta
 
@@ -61,8 +87,7 @@ def timeit(fn):
         retval =fn(*args, **kwargs)
         elapsed_time = time.perf_counter() - start_time
 
-        print_msg("""Time elapsed is {0:.4}""".format(elapsed_time))
-        
+        log("""Time elapsed is {0:.4}""".format(elapsed_time),level='info')
     return time_delta
 
 #Printing a message with time stamp
@@ -87,8 +112,8 @@ def exception_message(err):
         err_type,err_obj,tb = sys.exc_info()
         line_no = tb.tb_lineno
         
-        print_msg("ERROR:{err} on line number:{ln}".format(err=err,ln=line_no))
+        log("ERROR:{err} on line number:{ln}".format(err=err,ln=line_no),level='error')
         
-        print_msg("Error traceback: {traceback} -- type:{err_type}".format(traceback=traceback.format_exc(),err_type=err_type) ) 
-        print_msg(sys.exc_info()[2])
-        print_msg(str(err)) 
+        log("Error traceback: {traceback} -- type:{err_type}".format(traceback=traceback.format_exc(),err_type=err_type),level='error' ) 
+        log(sys.exc_info()[2],level='error')
+        log(str(err),level='error') 
