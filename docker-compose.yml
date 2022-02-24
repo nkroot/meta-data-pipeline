@@ -10,16 +10,16 @@ services:
       # env_file: 
       #   - ./.env
       environment:
-        - DATABASE_HOSTNAME=postgres
-        - DATABASE_PORT=5432
-        - DATABASE_PASSWORD=nkroot
-        - DATABASE_NAME=metadata
-        - DATABASE_USERNAME=postgres
-        - STAGING_SCHEMA=staging
-        - DEVELOPMENT_SCHEMA=dev
-        - SLEEP_TIME=5
-        - RETRY=5
-        - APIKEY=44326a4af92f39ef382ae81ad95c1123
+        - DATABASE_HOSTNAME=${DATABASE_HOSTNAME}
+        - DATABASE_PORT=${DATABASE_PORT}
+        - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+        - DATABASE_NAME=${DATABASE_NAME}
+        - DATABASE_USERNAME=${DATABASE_USERNAME}
+        - STAGING_SCHEMA=${STAGING_SCHEMA}
+        - DEVELOPMENT_SCHEMA=${DEVELOPMENT_SCHEMA}
+        - SLEEP_TIME=${SLEEP_TIME}
+        - RETRY=${RETRY}
+        - APIKEY=${APIKEY}
       
       command: >
         sh -c "python main.py 52.5170365 13.3888599
@@ -42,8 +42,8 @@ services:
       - 5342:5342
 
     environment:
-      - POSTGRES_PASSWORD=nkroot
-      - POSTGRES_DB=metadata
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
       - PGDATA=/var/lib/postgresql/data/pgdata
     
     volumes:
